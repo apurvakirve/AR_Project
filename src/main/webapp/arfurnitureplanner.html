@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Furniture Planner AI</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f6f6f6;
+    }
+
+    header {
+      background-color: #2f2f2f;
+      color: white;
+      padding: 20px 30px;
+      text-align: center;
+    }
+
+    .chat-container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+
+    .message {
+      margin-bottom: 25px;
+    }
+
+    .ai, .user {
+      max-width: 90%;
+      padding: 15px;
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .ai {
+      background-color: #e9f5ff;
+      margin-left: 20px;
+    }
+
+    .user {
+      background-color: #f0f0f0;
+      margin-left: auto;
+      margin-right: 20px;
+      text-align: right;
+    }
+
+    .ai-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .ai-images img {
+      width: 100px;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .input-area {
+      display: flex;
+      max-width: 800px;
+      margin: 0 auto 50px auto;
+      gap: 10px;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .input-area button {
+      padding: 10px 20px;
+      background-color: #0077ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .input-area button:hover {
+      background-color: #005fd9;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Furniture Planner AI</h1>
+    <p>Your AI-powered interior stylist</p>
+  </header>
+
+  <div class="chat-container" id="chat">
+    <div class="message ai">
+      👋 Hi! I’m your smart interior stylist. Ask me for furniture tips or room trends!
+    </div>
+  </div>
+
+  <div class="input-area">
+    <input type="text" id="userInput" placeholder="e.g., Show me trending bedroom designs" />
+    <button onclick="handleUserMessage()">Ask</button>
+  </div>
+
+  <script>
+    const chat = document.getElementById('chat');
+
+    function addMessage(content, sender = 'user', images = []) {
+      const message = document.createElement('div');
+      message.className = `message ${sender}`;
+
+      const text = document.createElement('div');
+      text.textContent = content;
+      message.appendChild(text);
+
+      if (sender === 'ai' && images.length > 0) {
+        const imageContainer = document.createElement('div');
+        imageContainer.className = 'ai-images';
+
+        images.forEach(url => {
+          const img = document.createElement('img');
+          img.src = url;
+          imageContainer.appendChild(img);
+        });
+
+        message.appendChild(imageContainer);
+      }
+
+      chat.appendChild(message);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    async function handleUserMessage() {
+      const input = document.getElementById('userInput');
+      const userText = input.value.trim();
+      if (!userText) return;
+
+      addMessage(userText, 'user');
+      input.value = '';
+
+      setTimeout(() => {
+        getAIResponse(userText);
+      }, 700);
+    }
+
+    function getAIResponse(prompt) {
+      let response = '';
+      let images = [];
+
+      if (prompt.toLowerCase().includes('living room')) {
+        response = "🛋️ Here's what's trending in living rooms:\n- Curved sofas in neutral tones\n- Marble-top coffee tables\n- Organic wall art";
+        images = [
+          'https://source.unsplash.com/featured/?livingroom,furniture',
+          'https://source.unsplash.com/featured/?sofa,modern',
+          'https://source.unsplash.com/featured/?interior,luxury'
+        ];
+      } else if (prompt.toLowerCase().includes('bedroom')) {
+        response = "🛏️ Top bedroom ideas this year:\n- Japandi platform beds\n- Soft ambient lighting\n- Earth-tone palettes";
+        images = [
+          'https://source.unsplash.com/featured/?bedroom,furniture',
+          'https://source.unsplash.com/featured/?interior,bed',
+          'https://source.unsplash.com/featured/?minimal,room'
+        ];
+      } else {
+        response = "🪑 Some trending picks across categories:\n- Bouclé chairs\n- Arched mirrors\n- Smart modular furniture";
+        images = [
+          'https://source.unsplash.com/featured/?chair,modern',
+          'https://source.unsplash.com/featured/?mirror,decor',
+          'https://source.unsplash.com/featured/?modular,furniture'
+        ];
+      }
+
+      addMessage(response, 'ai', images);
+    }
+  </script>
+</body>
+</html>

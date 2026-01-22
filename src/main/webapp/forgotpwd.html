@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password - RoomView AR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --light-brown: #d7ccc8;
+            --medium-brown: #a1887f;
+            --dark-brown: #5d4037;
+            --cream: #f5f5dc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: var(--cream);
+            color: var(--dark-brown);
+        }
+        
+        .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #d7ccc8;
+      padding: 15px 5%;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #5d4037;
+    }
+    .nav-group {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #5d4037;
+      font-weight: 500;
+    }
+    .nav-icons a {
+      color: #5d4037;
+      font-size: 20px;
+      text-decoration: none;
+    }
+        /* Login Section */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 100px);
+            padding: 20px;
+        }
+        
+        .login-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .login-card h2 {
+            color: var(--dark-brown);
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--dark-brown);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--medium-brown);
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .login-button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--dark-brown);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .login-button:hover {
+            background-color: #4e342e;
+        }
+        
+        .signup-link {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .signup-link a {
+            color: var(--dark-brown);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">ROOMVIEW AR</div>
+        <div class="nav-group">
+          <ul class="nav-links">
+            <li><a href="shopbyroom.html">Shop by Room</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="contactus.html">Contact Us</a></li>
+          </ul>
+          <div class="nav-icons">
+            <a href="login.html"><i class="fas fa-user"></i></a>
+          </div>
+        </div>
+      </nav>
+
+    <div class="login-container">
+        <div class="login-card">
+            <h2>Reset Password</h2>
+            
+            <!-- Add error message container -->
+            <div id="error-container" class="error-message" style="display: none;"></div>
+            
+            <form id="forgotPasswordForm" action="forgotpwd.php" method="POST">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password" required>
+                </div>
+                <button type="submit" class="login-button">Reset Password</button>
+            </form>
+            <div class="signup-link">
+                <p>Remember your password? <a href="login.html">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       
+        
+        // Dropdown toggle for mobile
+        const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('click', (e) => {
+                if (window.innerWidth <= 1024) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+        
+        // Check URL parameters for error messages
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const errorMsg = urlParams.get('error');
+            
+            if (errorMsg) {
+                const errorContainer = document.getElementById('error-container');
+                errorContainer.textContent = decodeURIComponent(errorMsg);
+                errorContainer.style.display = 'block';
+            }
+        };
+
+        // Client-side validation
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
+            const username = document.getElementById('username').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorContainer = document.getElementById('error-container');
+            
+            errorContainer.style.display = 'none';
+            
+            // Validate empty fields
+            if (!username || !newPassword || !confirmPassword) {
+                e.preventDefault();
+                errorContainer.textContent = 'All fields are required';
+                errorContainer.style.display = 'block';
+                return;
+            }
+            
+            // Validate password length
+            if (newPassword.length < 8) {
+                e.preventDefault();
+                errorContainer.textContent = 'Password must be at least 8 characters long';
+                errorContainer.style.display = 'block';
+                return;
+            }
+            
+            // Validate password match
+            if (newPassword !== confirmPassword) {
+                e.preventDefault();
+                errorContainer.textContent = 'Passwords do not match';
+                errorContainer.style.display = 'block';
+                return;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Our Furniture Store</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #83624b;
+            --secondary-color: #e6d5c3;
+            --accent-color: #5a7352;
+            --light-bg: #f9f7f4;
+            --dark-text: #333333;
+            --light-text: #f9f7f4;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+                .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #d7ccc8;
+            padding: 15px 5%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+            .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #5d4037;
+            }
+            .nav-group {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            }
+            .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            }
+            .nav-links a {
+            text-decoration: none;
+            color: #5d4037;
+            font-weight: 500;
+            
+            }
+            .nav-icons a {
+            color: #5d4037;
+            font-size: 20px;
+            text-decoration: none;
+            }
+
+        .container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        
+        .about-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        .about-content {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 3rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .about-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .about-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 100%;
+            min-height: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .about-image::after {
+            content: '🪑';
+            font-size: 8rem;
+            opacity: 0.2;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .values-section {
+            padding: 4rem 0;
+            background-color: var(--secondary-color);
+            margin: 4rem 0;
+        }
+        
+        .values-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+        
+        .values-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .values-title h2 {
+            display: inline-block;
+            margin: 0 auto;
+        }
+        
+        .values-title h2::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .value-card {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .value-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .value-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+    </style>
+</head>
+<body> 
+
+    <nav class="navbar">
+        <div class="logo">ROOMVIEW AR</div>
+        <div class="nav-group">
+          <ul class="nav-links">
+            <li><a href="shopbyroom.html">Shop by Room</a></li>
+            <li><a href="arfurnitureplanner.html">Planner Ai</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="contactus.html">Contact Us</a></li>
+          </ul>
+          <div class="nav-icons">
+            <a href="login.html"><i class="fas fa-user"></i></a>
+          </div>
+        </div>
+      </nav>
+    <header>
+        <div class="header-content">
+            <h1>Our Story</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="about-section">
+            <div class="about-content">
+                <h2>About Us</h2>
+                <p>Welcome to Elegant Living, where we transform houses into homes through carefully crafted furniture that blends style, comfort, and quality craftsmanship.</p>
+                <p>Our journey began with a simple vision: to provide high-quality furniture that elevates everyday living without compromising on affordability. Today, we stand as a testament to that vision, offering curated collections that speak to diverse tastes and lifestyles.</p>
+                <p>Each piece in our collection tells a story of skilled artisanship, thoughtful design, and sustainable practices. We collaborate with master craftspeople who share our passion for detail and durability, ensuring that every item not only enhances your space but stands the test of time.</p>
+                <p>With our innovative Augmented Reality technology, we've revolutionized furniture shopping by allowing you to visualize our pieces in your space before making a purchase. This commitment to customer experience extends to every aspect of our service.</p>
+            </div>
+        </section>
+    </div>
+    
+    <section class="values-section">
+        <div class="values-container">
+            <div class="values-title">
+                <h2>Our Core Values</h2>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Sustainability</h3>
+                    <p>We prioritize eco-friendly materials and responsible sourcing to reduce our environmental footprint while creating furniture that lasts generations.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>Quality</h3>
+                    <p>Every piece we create undergoes rigorous quality checks to ensure superior craftsmanship and long-term durability that you can rely on.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Service</h3>
+                    <p>Customer satisfaction drives everything we do, from personalized shopping experiences to seamless delivery and installation services.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>Innovation</h3>
+                    <p>Our AR technology and contemporary designs reflect our commitment to staying ahead of trends while meeting evolving customer needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+    <script>
+        // Simple scroll animation for elements
+        window.addEventListener('scroll', function() {
+            const elements = document.querySelectorAll('.about-content, .about-image, .value-card');
+            elements.forEach(element => {
+                const position = element.getBoundingClientRect();
+                if(position.top < window.innerHeight && position.bottom >= 0) {
+                    element.style.opacity = "1";
+                    element.style.transform = "translateY(0)";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

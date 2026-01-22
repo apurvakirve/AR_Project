@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bedroom AR Experience</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .category-button {
+            width: 220px;
+            height: 220px;
+            border: none;
+            border-radius: 10px;
+            background-color: #010101;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .category-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-button img {
+            width: 100%;
+            height: 80%;
+            object-fit: cover;
+        }
+
+        .category-button p {
+            height: 20%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .subcategory-section {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .subcategory-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .subcategory-item {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .subcategory-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .subcategory-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .subcategory-item p {
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .explore-ar-btn {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 8px 0;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .explore-ar-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .active-section {
+            display: block;
+        }
+
+        .section-title {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e74c3c;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding: 8px 20px;
+            background-color: #34495e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #2c3e50;
+        }
+        
+        .ar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .ar-container.active {
+            display: block;
+        }
+        
+        .close-ar {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            background-color: #e74c3c;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bedroom AR Experience</h1>
+        <p>Choose a category to explore in Augmented Reality</p>
+    </header>
+
+    <div class="container">
+        <div class="category-buttons" >
+            <button class="category-button" onclick="showSubcategory('beds')">
+                <img src="images/bedroom/bed/b_1.jpg" alt="Beds">
+                <p>Beds</p>
+            </button>
+            <button class="category-button" onclick="showSubcategory('wardrobes')">
+                <img src="images/bedroom/wardrobe/w_!.jpg" alt="Wardrobes">
+                <p>Wardrobes</p>
+            </button>
+            <button class="category-button" onclick="showSubcategory('nightstands')">
+                <img src="images/bedroom/couch/couch_1.jpg" alt="Nightstands">
+                <p>Nightstands</p>
+            </button>
+            <button class="category-button" onclick="showSubcategory('dressers')">
+                <img src="images/bedroom/dressingtable/dt_1.jpg" alt="Dressers">
+                <p>Dressers</p>
+            </button>
+        </div>
+
+        <!-- Beds Subcategory -->
+        <div id="beds-section" class="subcategory-section">
+            <button class="back-button" onclick="hideSubcategories()">Back to Categories</button>
+            <h2 class="section-title">Bed Collection</h2>
+            <div class="subcategory-container">
+                <div class="subcategory-item">
+                    <img src="images/bedroom/bed/bd_!.png" alt="Platform Beds">
+                    <button class="explore-ar-btn" onclick="showARView('bd_1')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/bed/bd_2.jpg" alt="Canopy Beds">
+                    <button class="explore-ar-btn" onclick="showARView('bd_2')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/bed/bd_3.jpg" alt="Sleigh Beds">
+                    <button class="explore-ar-btn" onclick="showARView('bd_3')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/bed/bd_4.jpg" alt="Storage Beds">
+                    <button class="explore-ar-btn" onclick="showARView('bd_4')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/bed/bd_5.jpg" alt="Bunk Beds">
+                    <button class="explore-ar-btn" onclick="showARView('bd_5')">Explore AR</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wardrobes Subcategory -->
+        <div id="wardrobes-section" class="subcategory-section">
+            <button class="back-button" onclick="hideSubcategories()">Back to Categories</button>
+            <h2 class="section-title">Wardrobe Collection</h2>
+            <div class="subcategory-container">
+                <div class="subcategory-item">
+                    <img src="images/bedroom/wardrobe/w_!.jpg" alt="Freestanding Wardrobes">
+                    <button class="explore-ar-btn" onclick="showARView('wardrobe_1')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/wardrobe/w_2.jpg" alt="Built-in Wardrobes">
+                    <button class="explore-ar-btn" onclick="showARView('wardrobe_2')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/wardrobe/w_3.jpg" alt="Sliding Door Wardrobes">
+                    <button class="explore-ar-btn" onclick="showARView('wardrobe_3')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/wardrobe/w_4.jpg" alt="Corner Wardrobes">
+                    <button class="explore-ar-btn" onclick="showARView('wardrobe_4')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/wardrobe/w_5.jpg" alt="Armoires">
+                    <button class="explore-ar-btn" onclick="showARView('wardrobe_5')">Explore AR</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nightstands Subcategory -->
+        <div id="nightstands-section" class="subcategory-section">
+            <button class="back-button" onclick="hideSubcategories()">Back to Categories</button>
+            <h2 class="section-title">Nightstand Collection</h2>
+            <div class="subcategory-container">
+                <div class="subcategory-item">
+                    <img src="images/bedroom/couch/couch_1.jpg" alt="Traditional Nightstands">
+                    <button class="explore-ar-btn" onclick="showARView('nightstand_1')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/couch/couch_2.jpg" alt="Modern Nightstands">
+                    <button class="explore-ar-btn" onclick="showARView('nightstand_2')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/couch/couch_3.jpg" alt="Floating Nightstands">
+                    <button class="explore-ar-btn" onclick="showARView('nightstand_3')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/couch/couch_4.jpg" alt="Nesting Nightstands">
+                    <button class="explore-ar-btn" onclick="showARView('nightstand_4')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/couch/couch_5.jpg" alt="Mirrored Nightstands">
+                    <button class="explore-ar-btn" onclick="showARView('nightstand_5')">Explore AR</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dressers Subcategory -->
+        <div id="dressers-section" class="subcategory-section">
+            <button class="back-button" onclick="hideSubcategories()">Back to Categories</button>
+            <h2 class="section-title">Dresser Collection</h2>
+            <div class="subcategory-container">
+                <div class="subcategory-item">
+                    <img src="images/bedroom/dressingtable/dt_1.jpg" alt="Horizontal Dressers">
+                    <button class="explore-ar-btn" onclick="showARView('dresser_1')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/dressingtable/dt_2.jpg" alt="Tall Dressers">
+                    <button class="explore-ar-btn" onclick="showARView('dresser_2')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/dressingtable/dt_3.jpg" alt="Combo Dressers">
+                    <button class="explore-ar-btn" onclick="showARView('dresser_3')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/dressingtable/dt_4.jpg" alt="Dresser with Mirror">
+                    <button class="explore-ar-btn" onclick="showARView('dresser_4')">Explore AR</button>
+                </div>
+                <div class="subcategory-item">
+                    <img src="images/bedroom/dressingtable/dt_1.jpg" alt="Chest of Drawers">
+                    <button class="explore-ar-btn" onclick="showARView('dresser_5')">Explore AR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--AR containers for beds-->
+    <div id="bd_1" class="ar-container">
+        <button class="close-ar" onclick="closeARView('bd_1')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_2_uewff6wrlb" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <div id="bd_2" class="ar-container">
+        <button class="close-ar" onclick="closeARView('bd_2')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_4_u3wbt8k5uj" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <div id="bd_3" class="ar-container">
+        <button class="close-ar" onclick="closeARView('bd_3')">×</button>
+        <iframe 
+           src="https://mywebar.com/p/Project_3_ui5rs8gsl8" 
+           frameborder="0"
+           scrolling="yes" 
+           seamless="seamless" 
+           style="display:block; width:100%; height:100vh;" 
+           allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+    
+    <div id="bd_4" class="ar-container">
+        <button class="close-ar" onclick="closeARView('bd_4')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_4_n9uu94yrb3"
+            frameborder="0" 
+            scrolling="yes"
+            seamless="seamless"
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+    
+    <div id="bd_5" class="ar-container">
+        <button class="close-ar" onclick="closeARView('bd_5')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_1_agcp05oo24" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <!--AR containers for wardrobes-->
+    <div id="wardrobe_1" class="ar-container">
+        <button class="close-ar" onclick="closeARView('wardrobe_1')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_2_d5t0sebj9e" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+
+        </iframe>
+    </div>
+
+    <div id="wardrobe_2" class="ar-container">
+        <button class="close-ar" onclick="closeARView('wardrobe_2')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_3_b2decegnqh" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+
+    <div id="wardrobe_3" class="ar-container">
+        <button class="close-ar" onclick="closeARView('wardrobe_3')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_wardrobe_3_sliding" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <div id="wardrobe_4" class="ar-container">
+        <button class="close-ar" onclick="closeARView('wardrobe_4')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_wardrobe_4_corner" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <div id="wardrobe_5" class="ar-container">
+        <button class="close-ar" onclick="closeARView('wardrobe_5')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_wardrobe_5_armoire" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <!--AR containers for nightstands-->
+    <div id="nightstand_1" class="ar-container">
+        <button class="close-ar" onclick="closeARView('nightstand_1')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_nightstand_1_traditional" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <div id="nightstand_2" class="ar-container">
+        <button class="close-ar" onclick="closeARView('nightstand_2')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_nightstand_2_modern" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <div id="nightstand_3" class="ar-container">
+        <button class="close-ar" onclick="closeARView('nightstand_3')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_nightstand_3_floating" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <div id="nightstand_4" class="ar-container">
+        <button class="close-ar" onclick="closeARView('nightstand_4')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_nightstand_4_nesting" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <div id="nightstand_5" class="ar-container">
+        <button class="close-ar" onclick="closeARView('nightstand_5')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_nightstand_5_mirrored" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <!--AR containers for dressers-->
+    <div id="dresser_1" class="ar-container">
+        <button class="close-ar" onclick="closeARView('dresser_1')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_dresser_1_horizontal" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <div id="dresser_2" class="ar-container">
+        <button class="close-ar" onclick="closeARView('dresser_2')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_dresser_2_tall" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <div id="dresser_3" class="ar-container">
+        <button class="close-ar" onclick="closeARView('dresser_3')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_dresser_3_combo" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <div id="dresser_4" class="ar-container">
+        <button class="close-ar" onclick="closeARView('dresser_4')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_dresser_4_mirror" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <div id="dresser_5" class="ar-container">
+        <button class="close-ar" onclick="closeARView('dresser_5')">×</button>
+        <iframe 
+            src="https://mywebar.com/p/Project_dresser_5_chest" 
+            frameborder="0" 
+            scrolling="yes" 
+            seamless="seamless" 
+            style="display:block; width:100%; height:100vh;" 
+            allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;">
+        </iframe>
+    </div>
+
+    <script>
+        function showSubcategory(category) {
+            // Hide all subcategory sections
+            document.querySelectorAll('.subcategory-section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            
+            // Show the selected subcategory section
+            document.getElementById(category + '-section').classList.add('active-section');
+        }
+
+        function hideSubcategories() {
+            // Hide all subcategory sections
+            document.querySelectorAll('.subcategory-section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+        }
+        
+        function showARView(arId) {
+            // Show the specific AR container
+            document.getElementById(arId).classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+        
+        function closeARView(arId) {
+            // Hide the specific AR container
+            document.getElementById(arId).classList.remove('active');
+            document.body.style.overflow = 'auto'; // Enable scrolling
+        }
+    </script>
+</body>
+</html>

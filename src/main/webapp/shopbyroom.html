@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop by Room</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+        }
+        
+        /* Room Selection Cards */
+        .room-selection {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .room-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            height: 300px;
+            background: rgb(0, 0, 0);
+            border: 5px solid black;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            overflow: hidden;
+            text-decoration: none;
+        }
+        
+        .room-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .room-image {
+            width: 100%;
+            height: 80%;
+            object-fit: cover;
+            border-bottom: 5px solid black;
+        }
+        
+        .room-card h1 {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin: 0;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .room-selection {
+                gap: 15px;
+            }
+            
+            .room-card {
+                width: 250px;
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .room-selection {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .room-card {
+                width: 90%;
+                max-width: 400px;
+            }
+            
+            header h1 {
+                font-size: 24px;
+                margin: 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .room-card {
+                height: 250px;
+            }
+            
+            header {
+                padding: 10px;
+            }
+            
+            header h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Shop by Room</h1>
+    </header>
+    
+    <!-- Room Selection with Images -->
+    <section class="room-selection">
+        <a href="living_room.html" class="room-card" target="_blank">
+            <img src="images/livingroom.jpg" alt="Living Room" class="room-image">
+            <h1>LIVING ROOM</h1>
+        </a>
+        <a href="bedroom.html" class="room-card" target="_blank">
+            <img src="images/bedroom.jpg" alt="Bedroom" class="room-image">
+            <h1>BEDROOM</h1>
+        </a>
+        <a href="kitchen.html" class="room-card" target="_blank">
+            <img src="images/kitchen.jpg" alt="Kitchen" class="room-image">
+            <h1>KITCHEN</h1>
+        </a>
+        <a href="washroom.html" class="room-card" target="_blank">
+            <img src="images/washroom.jpg" alt="Office" class="room-image">
+            <h1>WASHROOM</h1>
+        </a>
+    </section>
+    
+    <script src="script.js"></script>
+</body>
+</html>
